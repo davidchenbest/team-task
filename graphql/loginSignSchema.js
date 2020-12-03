@@ -5,6 +5,7 @@ const { UserType, LoginType } = require('./graphqlTypes');
 const {
   GraphQLObjectType,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLSchema,
   GraphQLString,
 } = require('graphql');
@@ -19,11 +20,11 @@ const LoginQuery = new GraphQLObjectType({
     login: {
       type: LoginType,
       args: {
-        email: { type: GraphQLString },
-        password: { type: GraphQLString },
+        username: { type: GraphQLString, GraphQLNonNull },
+        password: { type: GraphQLString, GraphQLNonNull },
       },
       async resolve(parent, args) {
-        let command = sqlCommands('EMAIL', { email: args.email });
+        let command = sqlCommands('USERNAME', { username: args.username });
         let user = new Promise((resolve, reject) => {
           DB.get(command, async (error, row, data) => {
             if (error) reject(console.log(error));
@@ -32,9 +33,9 @@ const LoginQuery = new GraphQLObjectType({
 
             const auth = await bcrypt.compare(args.password, row.password);
             if (!auth) return resolve({ error: 'Incorrect' });
-
+            console.log(row);
             const token = createToken(args.password);
-            resolve({ token });
+            resolve({ token, id: row.id });
           });
         });
         return await user;
@@ -49,17 +50,16 @@ const Mutation = new GraphQLObjectType({
     signup: {
       type: LoginType,
       args: {
-        email: { type: GraphQLString },
+        username: { type: GraphQLString },
         first: { type: GraphQLString },
         last: { type: GraphQLString },
         password: { type: GraphQLString },
       },
       async resolve(parent, args) {
         if (args.password.length < 6) return { error: 'Password too short' };
-        if (!args.email.includes('@')) return { error: 'Not a valid Email' };
         args.password = await bcryptString(args.password);
         let command = sqlCommands('SIGNUP', {
-          email: args.email,
+          username: args.username,
           first: args.first,
           last: args.last,
           password: args.password,

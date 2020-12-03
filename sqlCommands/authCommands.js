@@ -1,17 +1,14 @@
-const { LoneSchemaDefinitionRule } = require('graphql');
-
 function sqlCommands(type, data = {}) {
   switch (type) {
     case 'SIGNUP':
-      data.email = data.email.trim().toLowerCase();
+      data.username = data.username.trim().toLowerCase();
       data.first = formatName(data.first);
       data.last = formatName(data.last);
-      return `INSERT into users(email,first,last,password)  values ('${data.email}','${data.first}', '${data.last}','${data.password}' )`;
-    case 'ALL':
-      return 'SELECT * from users';
-    case 'EMAIL':
-      data.email = data.email.trim().toLowerCase();
-      return `SELECT * from users where email='${data.email}'`;
+      return `INSERT into users(username,first,last,password)  values ('${data.username}','${data.first}', '${data.last}','${data.password}' )`;
+
+    case 'USERNAME':
+      data.username = data.username.trim().toLowerCase();
+      return `SELECT * from users where username='${data.username}'`;
   }
 }
 

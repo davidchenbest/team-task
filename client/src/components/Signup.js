@@ -18,7 +18,7 @@ function passwordMatch() {
 
 export default function Signup() {
   const [error, setError] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [first, setFirst] = useState('');
   const [last, setLast] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +29,7 @@ export default function Signup() {
     if (!filled) return setError('Incomplete');
     const passMatch = passwordMatch();
     if (!passMatch) return setError('Password does not match');
-    let query = signup(email, first, last, password);
+    let query = signup(username, first, last, password);
     let data = await fetchLoginSign(query);
     if (data.data.signup.error === 'signup success') {
       return window.location.assign('/login');
@@ -41,8 +41,8 @@ export default function Signup() {
     <form onSubmit={(e) => submit(e)}>
       <input
         type="text"
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
       />
       <input
         type="text"

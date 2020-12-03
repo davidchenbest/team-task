@@ -3,7 +3,7 @@ export function getUsers() {
     {
         users{
           id
-          email
+          username
           first
           last
         }
@@ -11,23 +11,66 @@ export function getUsers() {
     `;
 }
 
-export function login(email, password) {
+export function login(username, password) {
   return `
     {
-        login(email:"${email}", password:"${password}"){
+        login(username:"${username}", password:"${password}"){
           token
           error
+          id
         }
         }
     `;
 }
 
-export function signup(email, first, last, password) {
+export function signup(username, first, last, password) {
   return `
   mutation{
-    signup(email:"${email}", first:"${first}", last:"${last}", password:"${password}"){
+    signup(username:"${username}", first:"${first}", last:"${last}", password:"${password}"){
       error
     }
     }
+  `;
+}
+
+export function getUsersIdUsername() {
+  return `
+  {usersIdUsername{
+    id
+    username
+  }}
+  `;
+}
+
+export function addTask(assignTo, assignBy, name, difficulty) {
+  return `
+  mutation{
+    addTask(assignTo:${assignTo},assignBy:${assignBy},name:"${name}",difficulty:${difficulty}){
+      name
+    }
+  }
+  `;
+}
+
+export function getTasks() {
+  return `
+  {
+    tasks{
+      assignTo
+      assignBy
+      name
+      difficulty
+      ratedDifficulty
+      id
+    }
+  }
+  `;
+}
+
+export function updateRated(rated, id) {
+  return `
+  mutation{updateRated(ratedDifficulty:${rated},id:${id}){
+    ratedDifficulty
+  }}
   `;
 }

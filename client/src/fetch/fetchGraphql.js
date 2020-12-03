@@ -1,10 +1,12 @@
-export default async function fetchGraphql(query, jwt) {
+import getCookie from '../modules/getCookie';
+export default async function fetchGraphql(query) {
+  const cookieToken = getCookie('taskjia');
   const url = `/graphql`;
   const opts = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${jwt}`,
+      authorization: `Bearer ${cookieToken}`,
     },
     body: JSON.stringify({ query }),
   };

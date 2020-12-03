@@ -21,8 +21,18 @@ export default function Nav() {
         {logged ? (
           <>
             <li>
+              <NavLink exact activeClassName="active" to="/tasks">
+                Tasks
+              </NavLink>
+            </li>
+            <li>
               <NavLink activeClassName="active" to="/users">
                 Users
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName="active" to="/assigntask">
+                Assign
               </NavLink>
             </li>
             <li>

@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { getUsers } from '../queries/graphqlQuery';
 import fetchGraphql from '../fetch/fetchGraphql';
-import getCookie from '../modules/getCookie';
+import checkCookieExist from '../modules/checkCookieExist';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const cookieToken = getCookie('taskjia');
-    if (!cookieToken) return window.location.assign('/login');
+    checkCookieExist();
     const query = getUsers();
-    fetchGraphql(query, cookieToken).then((data) => setUsers(data.data.users));
+    fetchGraphql(query).then((data) => setUsers(data.data.users));
   }, []);
 
   return (
@@ -18,7 +17,7 @@ export default function Users() {
       {users.map((user, i) => (
         <div key={i}>
           <p>{user.id}</p>
-          <p>{user.email}</p>
+          <p>{user.username}</p>
           <p>
             {user.first} {user.last}
           </p>

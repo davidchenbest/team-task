@@ -1,10 +1,15 @@
-const { GraphQLObjectType, GraphQLString, GraphQLID } = require('graphql');
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLID,
+  GraphQLInt,
+} = require('graphql');
 
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: { type: GraphQLID },
-    email: { type: GraphQLString },
+    username: { type: GraphQLString },
     first: { type: GraphQLString },
     last: { type: GraphQLString },
     password: { type: GraphQLString },
@@ -16,6 +21,19 @@ const LoginType = new GraphQLObjectType({
   fields: () => ({
     token: { type: GraphQLString },
     error: { type: GraphQLString },
+    id: { type: GraphQLID },
   }),
 });
-module.exports = { UserType, LoginType };
+
+const TaskType = new GraphQLObjectType({
+  name: 'Task',
+  fields: () => ({
+    assignTo: { type: GraphQLID },
+    assignBy: { type: GraphQLID },
+    name: { type: GraphQLString },
+    difficulty: { type: GraphQLInt },
+    ratedDifficulty: { type: GraphQLInt },
+    id: { type: GraphQLID },
+  }),
+});
+module.exports = { UserType, LoginType, TaskType };
