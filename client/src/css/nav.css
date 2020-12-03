@@ -1,0 +1,24 @@
+nav {
+  padding: 1em;
+  margin-bottom: 1em;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+}
+nav a {
+  text-decoration: none;
+  padding: 0.5em;
+  margin: 0.5em;
+
+  color: black;
+  border-radius: 5px;
+}
+
+nav a:hover {
+  background-color: tomato;
+}
+
+.active {
+  background-color: tomato;
+}
