@@ -17,6 +17,7 @@ export default function Login() {
 
     const { token, error, id } = data.data.login;
     if (token) {
+      document.cookie = `taskjiausername=${username.trim().toLowerCase()};`;
       document.cookie = `taskjiaid=${id};`;
       document.cookie = `taskjia=${token};${expireTime(60 * 60)}`;
       return window.location.assign('/');

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import '../css/users.css';
 import { getUsers } from '../queries/graphqlQuery';
 import fetchGraphql from '../fetch/fetchGraphql';
 import checkCookieExist from '../modules/checkCookieExist';
+import capFirstLetter from '../modules/capFirstLetter';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -15,9 +17,10 @@ export default function Users() {
   return (
     <div>
       {users.map((user, i) => (
-        <div key={i}>
-          <p>{user.id}</p>
-          <p>{user.username}</p>
+        <div key={i} className="eachUser">
+          <p>
+            Username: {capFirstLetter(user.username)} #{user.id}
+          </p>
           <p>
             {user.first} {user.last}
           </p>

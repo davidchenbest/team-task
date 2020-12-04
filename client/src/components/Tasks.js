@@ -5,14 +5,19 @@ import fetchGraphql from '../fetch/fetchGraphql';
 import checkCookieExist from '../modules/checkCookieExist';
 import Stars from './sub/Stars';
 import StaticStars from './sub/StaticStars';
+import DeleteTask from './sub/DeleteTask';
+import GetUserTask from './sub/GetUserTask';
 import getCookie from '../modules/getCookie';
 import { updateRated } from '../queries/graphqlQuery';
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
-  const [userId, setUserId] = useState('');
+  const [username, setUsername] = useState('');
   useEffect(() => {
-    setUserId(getCookie('taskjiaid'));
+    const uname = getCookie('taskjiausername');
+    if (!uname)
+      alert('Error: no setting ratings allowed.\nTry logging in again.');
+    setUsername(uname);
     checkCookieExist();
     async function fetch() {
       const query = getTasks();
@@ -23,6 +28,7 @@ export default function Tasks() {
   }, []);
 
   const setRatedDifficulty = async (difficulty, index, id) => {
+    if (difficulty === tasks[index].ratedDifficulty) return;
     let arr = [...tasks];
     arr[index].ratedDifficulty = difficulty;
     setTasks(arr);
@@ -32,8 +38,14 @@ export default function Tasks() {
       alert('there was an error');
   };
 
+  const deleteCard = (index) => {
+    let arr = [...tasks];
+    arr.splice(index, 1);
+    setTasks(arr);
+  };
+
   function displayCurrentUserRating(task, index) {
-    return task.assignTo === userId ? (
+    return task.assignTo.username === username ? (
       <Stars
         index={index}
         id={task.id}
@@ -49,13 +61,27 @@ export default function Tasks() {
     return rate ? <StaticStars difficulty={rate}></StaticStars> : 'Waiting';
   }
 
+  function highlightUserCards(uname) {
+    if (uname === username) return 'userCard';
+  }
+
   return (
     <>
+      <GetUserTask tasks={tasks} setTasks={setTasks}></GetUserTask>
       {tasks.map((task, index) => (
-        <div key={task.id} data-id={task.id} className="eachTask">
+        <div
+          key={task.id}
+          data-id={task.id}
+          className={`eachTask ${highlightUserCards(task.assignTo.username)}`}
+        >
+          <DeleteTask
+            id={task.id}
+            index={index}
+            deleteCard={deleteCard}
+          ></DeleteTask>
           <div>{task.name}</div>
-          <div>To: {task.assignTo}</div>
-          <div>By:{task.assignBy}</div>
+          <div>To: {task.assignTo.username}</div>
+          <div>By: {task.assignBy.username}</div>
           <div>
             Rated: <StaticStars difficulty={task.difficulty}></StaticStars>
           </div>

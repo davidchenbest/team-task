@@ -5,6 +5,11 @@ const {
   GraphQLInt,
 } = require('graphql');
 
+const sqlite3 = require('sqlite3').verbose();
+const DB = new sqlite3.Database('./taskManage.db');
+
+const taskCommands = require('../sqlCommands/taskCommands');
+
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
@@ -28,8 +33,34 @@ const LoginType = new GraphQLObjectType({
 const TaskType = new GraphQLObjectType({
   name: 'Task',
   fields: () => ({
-    assignTo: { type: GraphQLID },
-    assignBy: { type: GraphQLID },
+    assignTo: {
+      type: UserType,
+      async resolve(parent, args) {
+        let command = taskCommands('USERBYID');
+        let user = new Promise((resolve, reject) => {
+          DB.get(command, [parent.assignTo], async (error, row, data) => {
+            if (error) reject(console.log(error));
+            if (!row) return resolve({ username: 'Incorrect' });
+            resolve(row);
+          });
+        });
+        return await user;
+      },
+    },
+    assignBy: {
+      type: UserType,
+      async resolve(parent, args) {
+        let command = taskCommands('USERBYID');
+        let user = new Promise((resolve, reject) => {
+          DB.get(command, [parent.assignBy], async (error, row, data) => {
+            if (error) reject(console.log(error));
+            if (!row) return resolve({ username: 'Incorrect' });
+            resolve(row);
+          });
+        });
+        return await user;
+      },
+    },
     name: { type: GraphQLString },
     difficulty: { type: GraphQLInt },
     ratedDifficulty: { type: GraphQLInt },

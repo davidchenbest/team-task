@@ -56,8 +56,12 @@ export function getTasks() {
   return `
   {
     tasks{
-      assignTo
-      assignBy
+      assignTo{
+        username
+      }
+      assignBy{
+        username
+      }
       name
       difficulty
       ratedDifficulty
@@ -72,5 +76,15 @@ export function updateRated(rated, id) {
   mutation{updateRated(ratedDifficulty:${rated},id:${id}){
     ratedDifficulty
   }}
+  `;
+}
+
+export function deleteTask(id) {
+  return `
+  mutation{
+    deleteTask(id:${id}){
+      name
+    }
+  }
   `;
 }

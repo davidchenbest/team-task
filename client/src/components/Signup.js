@@ -31,6 +31,7 @@ export default function Signup() {
     if (!passMatch) return setError('Password does not match');
     let query = signup(username, first, last, password);
     let data = await fetchLoginSign(query);
+    console.log(data);
     if (data.data.signup.error === 'signup success') {
       return window.location.assign('/login');
     }

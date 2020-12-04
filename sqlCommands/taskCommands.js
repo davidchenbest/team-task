@@ -1,30 +1,20 @@
-function sqlCommands(type, data = {}) {
+function sqlCommands(type) {
   switch (type) {
     case 'ALLTASK':
-      return 'SELECT * from tasks';
+      return 'SELECT * from tasks order by createdDate desc';
     case 'ADDTASK':
-      if (!checkDifficulty(data)) throw Error('not valid');
-      return `INSERT into tasks(assignTo,assignBy,name,difficulty)  values ('${data.assignTo}','${data.assignBy}','${data.name}', '${data.difficulty}' )`;
+      return `INSERT into tasks(assignTo,assignBy,name,difficulty)  values (?,?,?,?)`;
     case 'USERS':
       return 'SELECT * from users';
     case 'USERSIDUSERNAME':
       return 'SELECT id,username from users';
     case 'UPDATERATED':
-      return `UPDATE tasks SET ratedDifficulty = ${data.ratedDifficulty} WHERE tasks.id=${data.id};`;
+      return `UPDATE tasks SET ratedDifficulty = ? WHERE tasks.id=?;`;
+    case 'USERBYID':
+      return `select * from users where id=?`;
+    case 'DELETETASK':
+      return 'delete from tasks where id=?';
   }
-}
-
-function checkDifficulty(data) {
-  const { difficulty, ratedDifficulty } = data;
-  if (
-    difficulty < 1 ||
-    difficulty > 5 ||
-    ratedDifficulty < 1 ||
-    ratedDifficulty > 5
-  ) {
-    return false;
-  }
-  return true;
 }
 
 module.exports = sqlCommands;

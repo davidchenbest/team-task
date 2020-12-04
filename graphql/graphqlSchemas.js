@@ -12,9 +12,8 @@ const {
   GraphQLID,
   GraphQLInt,
 } = require('graphql');
-const bcrypt = require('bcrypt');
 
-const createToken = require('../modules/createToken');
+const checkDifficulty = require('../modules/checkDifficulty');
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -72,15 +71,12 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         let { assignTo, assignBy, name, difficulty, ratedDifficulty } = args;
-        let command = taskCommands('ADDTASK', {
-          assignTo,
-          assignBy,
-          name,
-          difficulty,
-          ratedDifficulty,
-        });
+        if (!checkDifficulty({ difficulty, ratedDifficulty }))
+          throw Error('not valid rating range');
+        const values = [assignTo, assignBy, name, difficulty, ratedDifficulty];
+        let command = taskCommands('ADDTASK');
         let task = new Promise((resolve, reject) => {
-          DB.get(command, async (error, row, data) => {
+          DB.get(command, values, async (error, row, data) => {
             if (error)
               resolve({
                 name: 'error',
@@ -99,14 +95,36 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         let { ratedDifficulty, id } = args;
-        let command = taskCommands('UPDATERATED', { ratedDifficulty, id });
+        let command = taskCommands('UPDATERATED');
+        const values = [ratedDifficulty, id];
         let task = new Promise((resolve, reject) => {
-          DB.get(command, async (error, row, data) => {
+          DB.get(command, values, async (error, row, data) => {
             if (error)
               resolve({
                 ratedDifficulty: 0,
               });
             resolve({ ratedDifficulty: 1 });
+          });
+        });
+        return await task;
+      },
+    },
+    deleteTask: {
+      type: TaskType,
+      args: {
+        id: { type: GraphQLID, GraphQLNonNull },
+      },
+      async resolve(parent, args) {
+        let { id } = args;
+        let command = taskCommands('DELETETASK');
+        let task = new Promise((resolve, reject) => {
+          DB.get(command, [id], async (error, row, data) => {
+            console.log(error, row, data);
+            if (error)
+              resolve({
+                name: 0,
+              });
+            resolve({ name: 1 });
           });
         });
         return await task;

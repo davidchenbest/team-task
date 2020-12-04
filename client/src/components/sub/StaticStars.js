@@ -20,7 +20,7 @@ export default function Stars({ difficulty }) {
   }, [difficulty]);
 
   return (
-    <div className="rating">
+    <span className="rating">
       {stars.map((star, index) =>
         star.checked ? (
           <span
@@ -32,6 +32,6 @@ export default function Stars({ difficulty }) {
           <span key={index} className="fa fa-star " data-num={index}></span>
         )
       )}
-    </div>
+    </span>
   );
 }

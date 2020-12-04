@@ -8,3 +8,6 @@
 .eachTask div {
   margin: 0 1em;
 }
+.userCard {
+  border: 2px solid lightgreen;
+}

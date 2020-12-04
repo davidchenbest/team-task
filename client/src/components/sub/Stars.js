@@ -25,7 +25,7 @@ export default function Stars({ difficulty, setDifficulty, id, index }) {
   };
 
   return (
-    <div className="rating">
+    <span className="rating">
       {stars.map((star, index) =>
         star.checked ? (
           <span
@@ -43,6 +43,6 @@ export default function Stars({ difficulty, setDifficulty, id, index }) {
           ></span>
         )
       )}
-    </div>
+    </span>
   );
 }
