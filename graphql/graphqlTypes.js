@@ -65,6 +65,7 @@ const TaskType = new GraphQLObjectType({
     difficulty: { type: GraphQLInt },
     ratedDifficulty: { type: GraphQLInt },
     id: { type: GraphQLID },
+    createdDate: { type: GraphQLString },
   }),
 });
 module.exports = { UserType, LoginType, TaskType };

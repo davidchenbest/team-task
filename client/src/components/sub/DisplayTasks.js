@@ -5,6 +5,7 @@ import DeleteTask from './DeleteTask';
 import { updateRated } from '../../queries/graphqlQuery';
 import fetchGraphql from '../../fetch/fetchGraphql';
 import dateFormat from '../../modules/dateFormat';
+import CardDropdown from './CardDropdown';
 
 export default function DisplayTasks({ tasks, setTasks, username }) {
   const setRatedDifficulty = async (difficulty, index, id) => {
@@ -26,6 +27,7 @@ export default function DisplayTasks({ tasks, setTasks, username }) {
 
   function highlightUserCards(uname) {
     if (uname === username) return 'userCard';
+    return '';
   }
 
   function displayCurrentUserRating(task, index) {
@@ -42,34 +44,39 @@ export default function DisplayTasks({ tasks, setTasks, username }) {
   }
 
   function displayUserRating(rate) {
-    return rate ? <StaticStars difficulty={rate}></StaticStars> : 'Waiting';
+    return rate ? (
+      <StaticStars difficulty={rate}></StaticStars>
+    ) : (
+      <p>Waiting for user</p>
+    );
   }
   return (
-    <>
+    <div className="taskSection">
       {tasks.map((task, index) => (
         <div
           key={task.id}
           data-id={task.id}
           className={`eachTask ${highlightUserCards(task.assignTo.username)}`}
         >
-          <DeleteTask
-            id={task.id}
-            index={index}
-            deleteCard={deleteCard}
-          ></DeleteTask>
-          <div>{task.name}</div>
-          <div>To: {task.assignTo.username}</div>
-          <div>By: {task.assignBy.username}</div>
-          <div>Date: {dateFormat(task.createdDate)}</div>
-          <div>
-            Rated: <StaticStars difficulty={task.difficulty}></StaticStars>
+          <CardDropdown id={task.id} index={index} deleteCard={deleteCard} />
+
+          <div className="taskHead">
+            <h2>{task.name}</h2>
+            <span className="date">{dateFormat(task.createdDate)}</span>
           </div>
-          <div>
-            User Rated:
-            {displayCurrentUserRating(task, index)}
+
+          <div className="ratingCon">
+            <div>
+              Rated By: {task.assignBy.username}
+              <StaticStars difficulty={task.difficulty}></StaticStars>
+            </div>
+            <div>
+              User Rated By: {task.assignTo.username}
+              {displayCurrentUserRating(task, index)}
+            </div>
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }

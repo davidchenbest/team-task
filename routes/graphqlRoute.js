@@ -7,7 +7,7 @@ const jwtAuth = require('../middleware/authMiddleware');
 
 router.use(
   '/graphql',
-  jwtAuth,
+  // jwtAuth,
   graphqlHTTP({
     schema: graphQLSchema,
     graphiql: true,

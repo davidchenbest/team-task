@@ -11,5 +11,9 @@ export default function DeleteTask({ id, index, deleteCard }) {
     deleteCard(index);
   };
 
-  return <button onClick={() => click()}>Delete</button>;
+  return (
+    <div onClick={() => click()} className="taskDelete button">
+      Delete
+    </div>
+  );
 }

@@ -3,13 +3,66 @@
   margin: 1em 0;
   border: 1px solid lightgrey;
   border-radius: 5px;
+  line-height: 1.5em;
+  position: relative;
+}
+.eachTask .modify {
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0 0.25em;
+}
+.modify i {
+  color: gray;
+  cursor: pointer;
+  margin-right: 0;
+  margin-left: auto;
+  font-weight: bolder;
+  padding: 0;
+  height: 0.8em;
+}
+.modify i:hover {
+  color: tomato;
 }
 
-.eachTask div {
-  margin: 0 1em;
+.modify .dropdown {
+  cursor: pointer;
+  background-color: lightgrey;
 }
+
+.dropdown div:hover {
+  background-color: slategrey;
+}
+
+.taskHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.taskHead .date {
+  margin-left: 1em;
+}
+
 .userCard {
   border: 2px solid lightgreen;
+}
+
+.taskDelete {
+}
+
+.ratingCon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ratingCon div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .taskWrapper {
@@ -18,6 +71,13 @@
 
 .taskCon {
   flex-grow: 5;
+}
+
+.taskSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  row-gap: 1em;
+  column-gap: 1em;
 }
 
 .taskFilterCon {
