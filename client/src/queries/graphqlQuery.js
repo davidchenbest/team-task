@@ -66,6 +66,7 @@ export function getTasks() {
       difficulty
       ratedDifficulty
       id
+      createdDate
     }
   }
   `;

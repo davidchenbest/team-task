@@ -4,6 +4,7 @@ import StaticStars from './StaticStars';
 import DeleteTask from './DeleteTask';
 import { updateRated } from '../../queries/graphqlQuery';
 import fetchGraphql from '../../fetch/fetchGraphql';
+import dateFormat from '../../modules/dateFormat';
 
 export default function DisplayTasks({ tasks, setTasks, username }) {
   const setRatedDifficulty = async (difficulty, index, id) => {
@@ -59,6 +60,7 @@ export default function DisplayTasks({ tasks, setTasks, username }) {
           <div>{task.name}</div>
           <div>To: {task.assignTo.username}</div>
           <div>By: {task.assignBy.username}</div>
+          <div>Date: {dateFormat(task.createdDate)}</div>
           <div>
             Rated: <StaticStars difficulty={task.difficulty}></StaticStars>
           </div>

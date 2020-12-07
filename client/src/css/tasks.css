@@ -11,3 +11,34 @@
 .userCard {
   border: 2px solid lightgreen;
 }
+
+.taskWrapper {
+  display: flex;
+}
+
+.taskCon {
+  flex-grow: 5;
+}
+
+.taskFilterCon {
+  margin-right: 1.5em;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 5%;
+  max-height: 75vh;
+}
+
+.checkboxCon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25em;
+}
+
+.checkboxCon label {
+  margin-right: 0.5em;
+}
+.checkboxCon input[type='checkbox'] {
+  transform: scale(1.25);
+}
