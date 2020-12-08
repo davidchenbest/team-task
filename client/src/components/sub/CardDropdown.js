@@ -6,7 +6,7 @@ export default function CardDropdown({ id, index, deleteCard }) {
 
   return (
     <div className="modify" onClick={() => setDropDown(!dropdown)}>
-      <i class="material-icons">&#xe5d3;</i>
+      <i className="material-icons">&#xe5d3;</i>
       <div className="dropdown">
         {dropdown && (
           <DeleteTask id={id} index={index} deleteCard={deleteCard} />

@@ -1,0 +1,55 @@
+.taskFilterCon {
+  margin-right: 1.5em;
+  padding-right: 1.5em;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 5%;
+  max-height: 75vh;
+  border-right: 2px solid lightgray;
+}
+
+.checkboxWrapper {
+  border-radius: 5px;
+  border: 2px solid lightgray;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  width: 100%;
+}
+
+.checkboxCon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25em;
+}
+
+.checkboxCon label {
+  margin-right: 0.5em;
+}
+.checkboxCon input[type='checkbox'] {
+  transform: scale(1.25);
+}
+
+.orderCategory {
+  border-radius: 5px;
+  border: 2px solid lightgray;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  width: 100%;
+}
+
+.orderDirect {
+  border-radius: 5px;
+  border: 2px solid lightgray;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  width: 100%;
+}
+
+.orderDirect div {
+  display: block;
+}
+
+.orderDirect input {
+  margin-right: 0.5em;
+}

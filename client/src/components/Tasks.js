@@ -5,7 +5,7 @@ import fetchGraphql from '../fetch/fetchGraphql';
 import checkCookieExist from '../modules/checkCookieExist';
 import getCookie from '../modules/getCookie';
 import DisplayTasks from './sub/DisplayTasks';
-import FilterTasks from './sub/FilterTasks';
+import FilterTasks from './sub/filterTasks/FilterTasks';
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -46,6 +46,12 @@ export default function Tasks() {
   return (
     <div className="taskWrapper">
       <FilterTasks
+        tasks={tasks}
+        assignTasks={assignTasks}
+        otherTasks={otherTasks}
+        setTasks={setTasks}
+        setAssignTasks={setAssignTasks}
+        setOtherTasks={setOtherTasks}
         hideTasks={hideTasks}
         hideAssignTasks={hideAssignTasks}
         hideOtherTasks={hideOtherTasks}
